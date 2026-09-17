@@ -1,0 +1,17 @@
+{
+  "ignorePatterns": ["src/components/canvasui/**"],
+  "jsPlugins": ["@shadcn/lint"],
+  "settings": {
+    "shadcn": {
+      "ui": "@/components",
+      "note": "Design tokens live in src/app/globals.css @theme. Use theme utilities only."
+    }
+  },
+  "rules": {
+    "shadcn/no-restyle": ["error", { "allow": ["layout"] }],
+    "shadcn/no-raw-colors": "error",
+    "shadcn/no-arbitrary-values": "error",
+    "shadcn/no-inline-styles": "error",
+    "shadcn/no-unknown-classes": "warn"
+  }
+}
