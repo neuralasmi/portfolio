@@ -1,7 +1,7 @@
 "use client";
 
 import { ThinkingOrb } from "thinking-orbs";
-import HeroRain from "@/components/HeroRain";
+import { Droplets } from "@/components/canvasui/Droplets";
 import { useMotionOn } from "@/lib/motion";
 import Navbar from "@/components/Navbar";
 import About from "@/components/About";
@@ -50,21 +50,17 @@ export default function Home() {
       {/* HERO */}
       <header id="main" className="relative overflow-hidden">
         {fx ? (
-          <div className="relative min-h-screen">
-            <div aria-hidden className="rain-medium pointer-events-none absolute inset-0" />
-            <HeroRain />
+          <Droplets
+            intensity={0.6}
+            speed={1}
+            refraction={0.3}
+            interactive={true}
+            className="relative block min-h-screen"
+          >
             <HeroContent />
-          </div>
+          </Droplets>
         ) : (
-          <div className="relative min-h-screen">
-            <img
-              src="/hero-poster.svg"
-              alt=""
-              aria-hidden
-              className="absolute inset-0 h-full w-full object-cover opacity-60"
-            />
-            <HeroContent />
-          </div>
+          <HeroContent />
         )}
       </header>
 

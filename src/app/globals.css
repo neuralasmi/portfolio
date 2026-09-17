@@ -27,15 +27,6 @@ body {
   color: white;
 }
 
-/* Refraction medium for hero rain: near-invisible statically, gives
-   droplets light to bend across the full width (drops are lenses,
-   invisible over pure black). */
-.rain-medium {
-  background:
-    radial-gradient(55% 45% at 30% 38%, rgba(139, 92, 246, 0.1), transparent 70%),
-    radial-gradient(40% 35% at 75% 60%, rgba(139, 92, 246, 0.06), transparent 70%);
-}
-
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
