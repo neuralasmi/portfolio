@@ -31,8 +31,7 @@ function computeOn(): boolean {
 }
 
 /** True when animation should run. Reactive to OS + footer toggle. */
-export function useMotionOn(): boolean {
-  const [on, setOn] = useState(computeOn);
+export function useMotionOn(): boolean {  const [on, setOn] = useState(computeOn);
   useEffect(() => {
     const update = () => setOn(computeOn());
     window.addEventListener("portfolio-motion", update);
@@ -44,4 +43,18 @@ export function useMotionOn(): boolean {
     };
   }, []);
   return on;
+}
+
+/** True when WebGL2 is available. Probed once on mount. */
+export function useWebGL2(): boolean {
+  const [ok, setOk] = useState(false);
+  useEffect(() => {
+    try {
+      const c = document.createElement("canvas");
+      setOk(!!c.getContext("webgl2"));
+    } catch {
+      setOk(false);
+    }
+  }, []);
+  return ok;
 }

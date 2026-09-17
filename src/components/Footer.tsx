@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { site } from "@/content/site";
-import { getMotionPref, setMotionPref, useMotionOn, type MotionPref } from "@/lib/motion";
+import { getMotionPref, setMotionPref, useMotionOn, useWebGL2, type MotionPref } from "@/lib/motion";
 
 const LiquidFormBackground = dynamic(
   () => import("@/components/liquid-form/LiquidFormBackground").then((m) => m.LiquidFormBackground),
@@ -14,6 +14,7 @@ const LiquidFormBackground = dynamic(
 export default function Footer({ photoSrc }: { photoSrc?: string }) {
   const [pref, setPref] = useState<MotionPref>("auto");
   const motionOn = useMotionOn();
+  const webgl2 = useWebGL2();
   useEffect(() => {
     setPref(getMotionPref());
     const update = () => setPref(getMotionPref());
@@ -59,7 +60,7 @@ export default function Footer({ photoSrc }: { photoSrc?: string }) {
                 className="h-24 w-24 shrink-0 rounded-md object-cover grayscale"
               />
             )}
-            {motionOn ? (
+            {motionOn && webgl2 ? (
               <div className="h-64 w-64 shrink-0 overflow-hidden rounded-md bg-transparent mx-auto md:mx-0">
                 <LiquidFormBackground
                   className="h-full w-full mix-blend-screen"

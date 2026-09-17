@@ -2,7 +2,7 @@
 
 import { ThinkingOrb } from "thinking-orbs";
 import { Droplets } from "@/components/canvasui/Droplets";
-import { useMotionOn } from "@/lib/motion";
+import { useMotionOn, useWebGL2 } from "@/lib/motion";
 import Navbar from "@/components/Navbar";
 import About from "@/components/About";
 import Projects from "@/components/Projects";
@@ -15,47 +15,68 @@ import { site } from "@/content/site";
 // All copy lives in site.ts; page keeps no data copies.
 const LINKS = site.links;
 
+function HeroContent() {
+  const motionOn = useMotionOn();
+  return (
+    <div className="relative mx-auto max-w-2xl px-5 md:px-8 pt-28 pb-14">
+      <h1 className="text-3xl font-semibold tracking-tight">Asmi Yadav</h1>
+      <p className="mt-2 text-base text-muted">{site.role}</p>
+      <p className="mt-4 flex items-center gap-2 text-sm text-muted">
+        <ThinkingOrb state="breathing" size={20} paused={!motionOn} />
+        {site.location}. {site.availability}
+      </p>
+      <div className="mt-4 flex gap-5 text-sm">
+        <a href={`mailto:${LINKS.email}`} className="text-fg underline decoration-line underline-offset-4 hover:text-accent-fg">
+          Email
+        </a>
+        <a href={LINKS.github} target="_blank" className="text-fg underline decoration-line underline-offset-4 hover:text-accent-fg">
+          GitHub
+        </a>
+        <a href={LINKS.linkedin} target="_blank" className="text-fg underline decoration-line underline-offset-4 hover:text-accent-fg">
+          LinkedIn
+        </a>
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   const motionOn = useMotionOn();
+  const webgl2 = useWebGL2();
+  const fx = motionOn && webgl2;
   return (
     <div id="top" className="relative min-h-screen bg-bg text-fg">
       <Navbar />
 
       {/* HERO */}
-      <header className="relative overflow-hidden">
-        <Droplets
-          intensity={0.9}
-          speed={1}
-          scale={0.5}
-          refraction={0.4}
-          staticDrops={0.35}
-          fallSpeed={1.1}
-          interactive={true}
-          interactionRadius={0.12}
-          interactionStrength={0.35}
-          className="relative block min-h-screen"
-        >
-          <div aria-hidden className="rain-medium pointer-events-none absolute inset-0" />
-          <div id="main" className="relative mx-auto max-w-2xl px-5 md:px-8 pt-28 pb-14">
-            <h1 className="text-3xl font-semibold tracking-tight">Asmi Yadav</h1>
-            <p className="mt-2 text-base text-muted">{site.role}</p>
-            <p className="mt-4 flex items-center gap-2 text-sm text-muted">
-              <ThinkingOrb state="breathing" size={20} paused={!motionOn} />
-              {site.location}. {site.availability}
-            </p>
-            <div className="mt-4 flex gap-5 text-sm">
-              <a href={`mailto:${LINKS.email}`} className="text-fg underline decoration-line underline-offset-4 hover:text-accent-fg">
-                Email
-              </a>
-              <a href={LINKS.github} target="_blank" className="text-fg underline decoration-line underline-offset-4 hover:text-accent-fg">
-                GitHub
-              </a>
-              <a href={LINKS.linkedin} target="_blank" className="text-fg underline decoration-line underline-offset-4 hover:text-accent-fg">
-                LinkedIn
-              </a>
-            </div>
+      <header id="main" className="relative overflow-hidden">
+        {fx ? (
+          <Droplets
+            intensity={0.9}
+            speed={1}
+            scale={0.5}
+            refraction={0.4}
+            staticDrops={0.35}
+            fallSpeed={1.1}
+            interactive={true}
+            interactionRadius={0.12}
+            interactionStrength={0.35}
+            className="relative block min-h-screen"
+          >
+            <div aria-hidden className="rain-medium pointer-events-none absolute inset-0" />
+            <HeroContent />
+          </Droplets>
+        ) : (
+          <div className="relative min-h-screen">
+            <img
+              src="/hero-poster.svg"
+              alt=""
+              aria-hidden
+              className="absolute inset-0 h-full w-full object-cover opacity-60"
+            />
+            <HeroContent />
           </div>
-        </Droplets>
+        )}
       </header>
 
       <About />
