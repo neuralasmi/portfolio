@@ -16,9 +16,9 @@ function mulberry32(seed: number) {
   };
 }
 
-const RUNNERS = 70;
+const RUNNERS = 55;
 
-type Drop = { fx: number; y: number; len: number; w: number; sp: number; ph: number };
+type Drop = { fx: number; y: number; r: number; sp: number; ph: number; sway: number };
 
 export default function HeroRain() {
   const ref = useRef<HTMLCanvasElement>(null);
@@ -43,10 +43,10 @@ export default function HeroRain() {
       drops = Array.from({ length: RUNNERS }, () => ({
         fx: rnd(),
         y: rnd() * H,
-        len: (18 + rnd() * 30) * dpr,
-        w: (1 + rnd() * 1.2) * dpr,
-        sp: (1.6 + rnd() * 2.2) * dpr,
+        r: (2 + rnd() * 2.5) * dpr,
+        sp: (0.7 + rnd() * 1.3) * dpr,
         ph: rnd() * Math.PI * 2,
+        sway: (1 + rnd() * 3) * dpr,
       }));
     };
     layout();
@@ -62,26 +62,36 @@ export default function HeroRain() {
       if (document.visibilityState !== "visible") return;
       t += 1 / 30;
       ctx.clearRect(0, 0, W, H);
-      ctx.lineCap = "round";
       for (const d of drops) {
         d.y += d.sp;
-        if (d.y - d.len > H) {
-          d.y = -d.len;
+        if (d.y - d.r * 4 > H) {
+          d.y = -d.r * 4;
           d.fx = Math.random();
         }
-        const x = d.fx * W + Math.sin(t * 1.5 + d.ph) * 4 * dpr;
-        const grad = ctx.createLinearGradient(0, d.y - d.len, 0, d.y);
-        grad.addColorStop(0, "rgba(190,190,205,0)");
-        grad.addColorStop(1, "rgba(190,190,205,0.5)");
-        ctx.strokeStyle = grad;
-        ctx.lineWidth = d.w;
+        const x = d.fx * W + Math.sin(t * 1.2 + d.ph) * d.sway;
+        // trail above the bead
+        const tl = d.r * 5;
+        const tg = ctx.createLinearGradient(0, d.y - tl, 0, d.y);
+        tg.addColorStop(0, "rgba(200,200,215,0)");
+        tg.addColorStop(1, "rgba(200,200,215,0.3)");
+        ctx.strokeStyle = tg;
+        ctx.lineWidth = Math.max(1, d.r * 0.45);
+        ctx.lineCap = "round";
         ctx.beginPath();
-        ctx.moveTo(x, d.y - d.len);
-        ctx.lineTo(x, d.y);
+        ctx.moveTo(x, d.y - tl);
+        ctx.lineTo(x, d.y - d.r * 0.5);
         ctx.stroke();
-        ctx.fillStyle = "rgba(215,215,228,0.55)";
+        // glass bead: bright core, soft rim
+        const g = ctx.createRadialGradient(
+          x - d.r * 0.35, d.y - d.r * 0.35, d.r * 0.1,
+          x, d.y, d.r
+        );
+        g.addColorStop(0, "rgba(242,242,250,0.95)");
+        g.addColorStop(0.45, "rgba(185,175,225,0.4)");
+        g.addColorStop(1, "rgba(160,150,200,0)");
+        ctx.fillStyle = g;
         ctx.beginPath();
-        ctx.arc(x, d.y, d.w * 0.9, 0, Math.PI * 2);
+        ctx.arc(x, d.y, d.r, 0, Math.PI * 2);
         ctx.fill();
       }
     };

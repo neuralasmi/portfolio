@@ -122,3 +122,7 @@ All ≤7. No refactors needed (nothing was ever over threshold).
 ## Addendum 12 — WebGL gating + fallbacks
 - Diagnosis for dead canvases on user machine: both effects fail silently when WebGL2 context creation fails (no errors thrown by design). Added useWebGL2 probe in lib/motion.ts; hero renders poster-backed content and footer renders its placeholder when motion is off OR WebGL2 is missing. No more voids on any browser.
 - Gates: oxlint 0 errors, tsc clean, build green 4/4.
+
+## Addendum 13 — vendor Droplets removed, in-house rain
+- Root cause of dead hero: vendor Droplets hard-freezes on OS reduced-motion with no override prop, so the footer toggle could never unfreeze it. Replaced with HeroRain (plain 2D canvas, sharp elongated drops + trails, even coverage, obeys toggle, needs no WebGL). Text is plain DOM, never distorted. Vendor files deleted.
+- Gates: oxlint 0 errors, tsc clean, build green 4/4. Deployed to production.
