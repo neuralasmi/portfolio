@@ -80,6 +80,10 @@ All ≤7. No refactors needed (nothing was ever over threshold).
 - **LiquidFormBackground evaluated**: real export, 4 KB wrapper, props verified — but needs three.js (~150 KB gz). Kept out of the bundle (package installed, never imported). One-line swap available if wanted.
 - Vendor dir excluded from oxlint (`ignorePatterns`); own code at 0 errors. tsc clean, build green 4/4.
 
+## Addendum 10 — vendored LiquidForm, true-black bg
+- Root cause of grey backdrop: the stock shader paints bgCol 0.02–0.05 (gamma-lifted to grey) and the canvas is opaque alpha:false — no CSS can remove it. Vendored the component locally under src/components/liquid-form (MIT): identical behavior, bg forced to vec3(0.0), DPR cap 1.5→2, typed rewrite. Footer imports the local copy; threeui + three uninstalled.
+- Gates: oxlint 0 errors, tsc clean, build green 4/4.
+
 ## Addendum 4 — text inside the rain
 - Root cause of dull droplets: refraction with empty dark content behind = nothing to bend. Fixed the correct way: hero text now lives INSIDE Droplets children, so rain breaks the text apart and it recollects as drops fall; pointer wipes clear. Full DPR (≤2) kept for sharpness.
 - A11y fix from the move: aria-hidden off CanvasWrapper (it now wraps real text), onto MossCanvas element instead.
@@ -106,3 +110,11 @@ All ≤7. No refactors needed (nothing was ever over threshold).
 ## Addendum 9 — LiquidForm footer
 - ThreeUI LiquidFormBackground verified raw-WebGL (no three.js, ~8KB), wired bottom-right of footer via subpath import, violet tint (hue 268), pointer-reactive. Static placeholder under reduced-motion. Rain and all other footer content untouched.
 - Gates: oxlint 0 errors, tsc clean, build green 4/4.
+
+## Addendum 10 — vendored LiquidForm, true-black bg
+- Root cause of grey backdrop: the stock shader paints bgCol 0.02–0.05 (gamma-lifted to grey) and the canvas is opaque alpha:false — no CSS can remove it. Vendored the component locally under src/components/liquid-form (MIT): identical behavior, bg forced to vec3(0.0), DPR cap 1.5→2, typed rewrite. Footer imports the local copy; threeui + three uninstalled.
+- Gates: oxlint 0 errors, tsc clean, build green 4/4.
+
+## Addendum 11 — shader transcription fix
+- My vendored copy had vec3 where upstream has vec4 (snoise temporaries) — GLSL only fails at runtime, so build was green while the browser threw. Fixed, audited the rest of the file against upstream: identical except the two intended bg changes.
+- Gates: tsc clean, build green 4/4.
