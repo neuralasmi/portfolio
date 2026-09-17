@@ -102,3 +102,7 @@ All ≤7. No refactors needed (nothing was ever over threshold).
 - `npx shadcn@latest add @canvas-ui/droplets-react` (already present; components.json already existed, no init needed).
 - Hero content (h1, one-liner, status, links — unchanged) now wrapped in `<Droplets intensity={0.6} speed={1} interactive>`, min-h-screen wrapper. Custom RainText lensing + ambient Hero background deleted (no duplicate effects).
 - Gates: oxlint 0 errors, tsc clean, build green 4/4. Browser-console check must be done by user (needs their flagged Chrome).
+
+## Addendum 9 — LiquidForm footer
+- ThreeUI LiquidFormBackground verified raw-WebGL (no three.js, ~8KB), wired bottom-right of footer via subpath import, violet tint (hue 268), pointer-reactive. Static placeholder under reduced-motion. Rain and all other footer content untouched.
+- Gates: oxlint 0 errors, tsc clean, build green 4/4.

@@ -1,13 +1,23 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { site } from "@/content/site";
-import { getMotionPref, setMotionPref, type MotionPref } from "@/lib/motion";
+import { getMotionPref, setMotionPref, useMotionOn, type MotionPref } from "@/lib/motion";
+
+const LiquidFormBackground = dynamic(
+  () =>
+    import("@designcodeio/threeui/components/LiquidFormBackground").then(
+      (m) => m.LiquidFormBackground
+    ),
+  { ssr: false }
+);
 
 // Footer. Portrait slot reserved: pass photoSrc to place a portrait
 // beside the wordmark (square, grayscale, rounded-md).
 export default function Footer({ photoSrc }: { photoSrc?: string }) {
   const [pref, setPref] = useState<MotionPref>("auto");
+  const motionOn = useMotionOn();
   useEffect(() => {
     setPref(getMotionPref());
     const update = () => setPref(getMotionPref());
@@ -35,6 +45,19 @@ export default function Footer({ photoSrc }: { photoSrc?: string }) {
               alt="Asmi Yadav"
               className="h-24 w-24 shrink-0 rounded-md object-cover grayscale"
             />
+          )}
+          {motionOn ? (
+            <div className="h-28 w-44 shrink-0 overflow-hidden rounded-md">
+              <LiquidFormBackground
+                className="h-full w-full"
+                speed={0.8}
+                mouseAmount={0.2}
+                tintHue={268}
+                tintAmount={0.3}
+              />
+            </div>
+          ) : (
+            <div aria-hidden className="h-28 w-44 shrink-0 rounded-md bg-accent/20" />
           )}
         </div>
         <div className="mt-8 flex flex-wrap gap-x-5 gap-y-2 text-sm">
