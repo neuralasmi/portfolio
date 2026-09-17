@@ -17,8 +17,10 @@ function mulberry32(seed: number) {
 }
 
 const RUNNERS = 55;
+const TAGLINE_ID = "hero-tagline";
 
 type Drop = { fx: number; y: number; r: number; sp: number; ph: number; sway: number };
+type TRect = { x: number; y: number; w: number; h: number };
 
 export default function HeroRain() {
   const ref = useRef<HTMLCanvasElement>(null);
@@ -32,6 +34,8 @@ export default function HeroRain() {
     let W = 2;
     let H = 2;
     let drops: Drop[] = [];
+    let textCv: HTMLCanvasElement | null = null;
+    let tx: TRect = { x: 0, y: 0, w: 0, h: 0 };
 
     const layout = () => {
       const r = canvas.getBoundingClientRect();
@@ -51,6 +55,47 @@ export default function HeroRain() {
     };
     layout();
     window.addEventListener("resize", layout);
+
+    const layoutText = () => {
+      textCv = null;
+      const el = document.getElementById(TAGLINE_ID);
+      if (!el) return;
+      const cr = canvas.getBoundingClientRect();
+      const r = el.getBoundingClientRect();
+      const w = Math.max(2, Math.floor(r.width * dpr));
+      const h = Math.max(2, Math.floor(r.height * dpr));
+      tx = {
+        x: (r.left - cr.left) * dpr,
+        y: (r.top - cr.top) * dpr,
+        w,
+        h,
+      };
+      const tc = document.createElement("canvas");
+      tc.width = w;
+      tc.height = h;
+      const tctx = tc.getContext("2d");
+      if (!tctx) return;
+      tctx.font = `${16 * dpr}px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif`;
+      tctx.fillStyle = "#8a8a96";
+      tctx.textBaseline = "top";
+      const words = el.textContent?.split(" ") ?? [];
+      const lines: string[] = [];
+      let line = "";
+      for (const word of words) {
+        const trial = line ? line + " " + word : word;
+        if (tctx.measureText(trial).width > w && line) {
+          lines.push(line);
+          line = word;
+        } else {
+          line = trial;
+        }
+      }
+      if (line) lines.push(line);
+      lines.forEach((l, i) => tctx.fillText(l, 0, i * 24 * dpr));
+      textCv = tc;
+    };
+    layoutText();
+    window.addEventListener("resize", layoutText);
 
     let raf = 0;
     let last = 0;
@@ -93,12 +138,31 @@ export default function HeroRain() {
         ctx.beginPath();
         ctx.arc(x, d.y, d.r, 0, Math.PI * 2);
         ctx.fill();
+        // lens: where a drop crosses the tagline, shift a 1:1 copy a few
+        // pixels so glyphs wobble, then settle as it passes
+        if (
+          textCv &&
+          x + d.r > tx.x &&
+          x - d.r < tx.x + tx.w &&
+          d.y + d.r > tx.y &&
+          d.y - d.r < tx.y + tx.h
+        ) {
+          const shx = Math.sin(t * 3 + d.ph) * 2 * dpr;
+          const shy = Math.cos(t * 2.3 + d.ph) * 1.5 * dpr;
+          ctx.save();
+          ctx.beginPath();
+          ctx.arc(x, d.y, d.r * 1.3, 0, Math.PI * 2);
+          ctx.clip();
+          ctx.drawImage(textCv, tx.x + shx, tx.y + shy);
+          ctx.restore();
+        }
       }
     };
     raf = requestAnimationFrame(frame);
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", layout);
+      window.removeEventListener("resize", layoutText);
     };
   }, []);
 
