@@ -15,6 +15,8 @@ import { site } from "@/content/site";
 // All copy lives in site.ts; page keeps no data copies.
 const LINKS = site.links;
 
+const TINT: [number, number, number] = [1, 1, 1];
+
 function HeroContent() {
   const motionOn = useMotionOn();
   return (
@@ -40,28 +42,13 @@ function HeroContent() {
   );
 }
 
-export default function Home() {
-  const motionOn = useMotionOn();
-  const fx = motionOn;
+function PageBody() {
   return (
-    <div id="top" className="relative min-h-screen bg-bg text-fg">
+    <>
       <Navbar />
-
       {/* HERO */}
       <header id="main" className="relative overflow-hidden">
-        {fx ? (
-          <Droplets
-            intensity={0.6}
-            speed={1}
-            refraction={0.3}
-            interactive={true}
-            className="relative block min-h-screen"
-          >
-            <HeroContent />
-          </Droplets>
-        ) : (
-          <HeroContent />
-        )}
+        <HeroContent />
       </header>
 
       <About />
@@ -97,6 +84,41 @@ export default function Home() {
       </section>
 
       <Footer />
+    </>
+  );
+}
+
+export default function Home() {
+  const motionOn = useMotionOn();
+  const fx = motionOn;
+  return (
+    <div id="top" className="relative min-h-screen bg-bg text-fg">
+      {fx ? (
+        <Droplets
+          intensity={0.6}
+          speed={1}
+          scale={0.4}
+          dropWidth={1}
+          dropLength={1}
+          refraction={0.3}
+          blur={0.05}
+          vignette={0.2}
+          fallSpeed={1}
+          wiggle={1}
+          staticDrops={0.2}
+          interactive={true}
+          interactionRadius={0.3}
+          interactionStrength={0.6}
+          interactionDistortion={3}
+          tint={TINT}
+          tintStrength={0}
+          className="relative block min-h-screen"
+        >
+          <PageBody />
+        </Droplets>
+      ) : (
+        <PageBody />
+      )}
     </div>
   );
 }
