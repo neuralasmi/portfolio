@@ -89,36 +89,32 @@ function PageBody() {
 }
 
 export default function Home() {
-  const motionOn = useMotionOn();
-  const fx = motionOn;
   return (
     <div id="top" className="relative min-h-screen bg-bg text-fg">
-      {fx ? (
-        <Droplets
-          intensity={0.6}
-          speed={1}
-          scale={0.4}
-          dropWidth={1}
-          dropLength={1}
-          refraction={0.3}
-          blur={0.05}
-          vignette={0.2}
-          fallSpeed={1}
-          wiggle={1}
-          staticDrops={0.2}
-          interactive={true}
-          interactionRadius={0.3}
-          interactionStrength={0.6}
-          interactionDistortion={3}
-          tint={TINT}
-          tintStrength={0}
-          className="relative block min-h-screen"
-        >
+      <Droplets
+        intensity={0.8}
+        speed={1}
+        scale={0.4}
+        dropWidth={1}
+        dropLength={1}
+        refraction={0.5}
+        blur={0.05}
+        vignette={0.1}
+        fallSpeed={1}
+        wiggle={1}
+        staticDrops={0.2}
+        interactive={true}
+        interactionRadius={0.3}
+        interactionStrength={0.6}
+        interactionDistortion={3}
+        tint={TINT}
+        tintStrength={0.1}
+        className="relative block min-h-screen"
+      >
+        <div className="relative z-10 min-h-screen p-8 text-fg">
           <PageBody />
-        </Droplets>
-      ) : (
-        <PageBody />
-      )}
+        </div>
+      </Droplets>
     </div>
   );
 }
