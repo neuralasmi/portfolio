@@ -1,7 +1,7 @@
 "use client";
 
 import { ThinkingOrb } from "thinking-orbs";
-import { Droplets } from "@/components/canvasui/Droplets";
+import DropletName from "@/components/DropletName";
 import { useMotionOn } from "@/lib/motion";
 import Navbar from "@/components/Navbar";
 import About from "@/components/About";
@@ -15,13 +15,11 @@ import { site } from "@/content/site";
 // All copy lives in site.ts; page keeps no data copies.
 const LINKS = site.links;
 
-const TINT: [number, number, number] = [1, 1, 1];
-
 function HeroContent() {
   const motionOn = useMotionOn();
   return (
     <div className="relative mx-auto max-w-2xl px-5 md:px-8 pt-28 pb-14">
-      <h1 className="text-3xl font-semibold tracking-tight">Asmi Yadav</h1>
+      <h1 className="text-3xl font-semibold tracking-tight">{motionOn ? <DropletName /> : "Asmi"}{" Yadav"}</h1>
       <p id="hero-tagline" className="mt-2 text-base text-muted">{site.role}</p>
       <p className="mt-4 flex items-center gap-2 text-sm text-muted">
         <ThinkingOrb state="breathing" size={20} paused={!motionOn} />
@@ -91,30 +89,7 @@ function PageBody() {
 export default function Home() {
   return (
     <div id="top" className="relative min-h-screen bg-bg text-fg">
-      <Droplets
-        intensity={0.8}
-        speed={1}
-        scale={0.4}
-        dropWidth={1}
-        dropLength={1}
-        refraction={0.5}
-        blur={0.05}
-        vignette={0.1}
-        fallSpeed={1}
-        wiggle={1}
-        staticDrops={0.2}
-        interactive={true}
-        interactionRadius={0.3}
-        interactionStrength={0.6}
-        interactionDistortion={3}
-        tint={TINT}
-        tintStrength={0.1}
-        className="relative block min-h-screen"
-      >
-        <div className="relative z-10 min-h-screen p-8 text-fg">
-          <PageBody />
-        </div>
-      </Droplets>
+      <PageBody />
     </div>
   );
 }
