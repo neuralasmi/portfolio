@@ -61,28 +61,6 @@ function PageBody() {
 
       <Education />
 
-      {/* CONTACT */}
-      <section id="contact" className="mx-auto max-w-2xl scroll-mt-24 px-5 py-16 md:px-8 md:py-24">
-        <h2 className="text-xl font-medium">Contact</h2>
-        <p className="mt-4 text-sm text-muted">Email works best.</p>
-        <ul className="mt-4 space-y-2 text-sm">
-          <li>
-            <a href={`mailto:${LINKS.email}`} className="text-fg underline decoration-line underline-offset-4 hover:text-accent-fg">
-              {LINKS.email}
-            </a>
-          </li>
-          <li className="flex gap-5">
-            <a href={LINKS.github} target="_blank" className="text-fg underline decoration-line underline-offset-4 hover:text-accent-fg">
-              GitHub
-            </a>
-            <a href={LINKS.linkedin} target="_blank" className="text-fg underline decoration-line underline-offset-4 hover:text-accent-fg">
-              LinkedIn
-            </a>
-            <span className="text-muted">{LINKS.phone}</span>
-          </li>
-        </ul>
-      </section>
-
       <Footer />
     </>
   );

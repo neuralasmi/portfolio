@@ -119,6 +119,11 @@ All ≤7. No refactors needed (nothing was ever over threshold).
 - My vendored copy had vec3 where upstream has vec4 (snoise temporaries) — GLSL only fails at runtime, so build was green while the browser threw. Fixed, audited the rest of the file against upstream: identical except the two intended bg changes.
 - Gates: tsc clean, build green 4/4.
 
+## Addendum 16 — lavender accents + deploy check
+- Tagline and experience role/org lines switched to text-accent-fg (same lavender as footer wordmark). Supporting text stays muted for hierarchy.
+- Vercel auth session is alive: `npx vercel --prod` succeeded, production deploy ready. If the user hit "Not authorized", it was an expired session: fix is `npx vercel login`, then retry.
+- Gates: oxlint 0 errors, tsc clean, build green 4/4. Deployed to production.
+
 ## Addendum 15 — hero-block rain via html2canvas snapshot
 - New DropletHero component: provided reference integrated verbatim (npm html2canvas instead of CDN). Hero block only; full-page vendor wrap and Asmi-only widget removed. Toggle-gated.
 - Gates: oxlint 0 errors, tsc clean, build green 4/4. Deployed to production. Awaiting user's console verdict.

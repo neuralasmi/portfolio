@@ -8,7 +8,6 @@ const ITEMS: [string, string][] = [
   ["Projects", "#projects"],
   ["Experience", "#experience"],
   ["Skills", "#skills"],
-  ["Contact", "#contact"],
 ];
 
 export default function Navbar() {
