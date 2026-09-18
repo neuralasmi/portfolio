@@ -49,7 +49,7 @@ export default function DropletHero({
     const gl = canvas.getContext("webgl2", {
       alpha: true,
       premultipliedAlpha: true,
-      antialias: false,
+      antialias: true,
       depth: false,
       stencil: false,
     });
@@ -199,10 +199,18 @@ export default function DropletHero({
       vec4 content = textureLod(uContent, vec2(refractedUv.x, 1.0 - refractedUv.y), focus);
       vec3 col = content.rgb;
 
+      // Glistening specular highlight — a bright glint where a droplet's surface
+      // catches the light, layered on top of the refracted content underneath it.
+      vec3 n3 = normalize(vec3(normal * 40.0, 1.0));
+      vec3 L = normalize(vec3(-0.35, 0.75, 0.55));
+      float spec = pow(max(dot(reflect(vec3(0.0, 0.0, -1.0), n3), L), 0.0), 28.0);
+      float rim = clamp(length(normal) * 22.0, 0.0, 1.0);
+      col += vec3(spec) * (0.85 + 0.35 * rim) * content.a;
+
       vec2 vUvC = uv - 0.5;
       col *= 1.0 - dot(vUvC, vUvC) * clamp(uVignette, 0.0, 1.0) * 2.0;
 
-      outColor = vec4(col * content.a, content.a);
+      outColor = vec4(clamp(col, 0.0, 1.0) * content.a, content.a);
     }`;
 
     function compile(type: number, src: string) {
@@ -298,8 +306,8 @@ export default function DropletHero({
         });
     }
 
-    const BROKEN = { intensity: 1.2, refraction: 0.55, blur: 2.5, scale: 1, dropWidth: 1, dropLength: 1.2, wiggle: 1, staticDrops: 1.2, fallSpeed: 1.6, vignette: 0.15 };
-    const SETTLED = { intensity: 0.5, refraction: 0.2, blur: 0, scale: 1, dropWidth: 1, dropLength: 1, wiggle: 1, staticDrops: 0.2, fallSpeed: 1, vignette: 0.05 };
+    const BROKEN = { intensity: 1.2, refraction: 0.55, blur: 2.5, scale: 0.55, dropWidth: 1.3, dropLength: 1.3, wiggle: 1, staticDrops: 0.5, fallSpeed: 1.6, vignette: 0.15 };
+    const SETTLED = { intensity: 0.75, refraction: 0.22, blur: 0, scale: 0.55, dropWidth: 1.3, dropLength: 1.1, wiggle: 0.9, staticDrops: 0.1, fallSpeed: 1, vignette: 0.05 };
     const HOLD_MS = 300;
     const TWEEN_MS = 2400;
     const current: Record<keyof typeof BROKEN, number> = { ...BROKEN };
