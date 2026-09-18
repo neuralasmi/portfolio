@@ -47,7 +47,7 @@ function PageBody() {
     <>
       <Navbar />
       {/* HERO */}
-      <header id="main" className="relative overflow-hidden">
+      <header id="main" className="relative overflow-visible">
         <HeroContent />
       </header>
 
