@@ -269,8 +269,8 @@ export default function DropletHero({
       gl!.generateMipmap(gl!.TEXTURE_2D);
     }
 
-    function syncCanvasSize() {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  function syncCanvasSize() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 3);
       const rect = container!.getBoundingClientRect();
       canvas!.width = Math.max(1, Math.round(rect.width * dpr));
       canvas!.height = Math.max(1, Math.round(rect.height * dpr));
@@ -283,8 +283,8 @@ export default function DropletHero({
 
     function capture() {
       if (capturing) return;
-      capturing = true;
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    capturing = true;
+    const dpr = Math.min(window.devicePixelRatio || 1, 3);
       html2canvas(container!, {
         backgroundColor: null,
         scale: dpr,

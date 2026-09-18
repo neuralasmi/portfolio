@@ -167,3 +167,8 @@ All ≤7. No refactors needed (nothing was ever over threshold).
 ## Addendum 22 — glow relocation (disappearing-glow fix)
 - Diagnosis: #droplet-hero.is-active > * opacity:0 hid the whole text subtree including the glow div (visible only pre-capture). No JS animation/removal involved; child opacity !important could not override ancestor opacity, so relocated per spec: glow div now first child of header#main. CSS !important patch also applied as specified. Droplet logic/markup/CSS untouched.
 - Gates: oxlint 0 errors, tsc clean, build green 4/4. Deployed to production.
+
+## Addendum 23 — droplet sharpness diagnosis + glow +30%
+- Diagnosis (read-only): WebGL2 canvas, buffer matches CSS box with DPR scaling; only droplet-file changes are user-ordered ones; no CSS leakage onto the canvas. Faint look is the SETTLED state by design, now lower-contrast against the brighter wash.
+- Glow gradient stops raised (~+30%), nothing else touched. Droplet code untouched.
+- Gates: oxlint 0 errors, build green 4/4. Deployed to production.
