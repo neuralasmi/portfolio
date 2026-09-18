@@ -123,6 +123,10 @@ All ≤7. No refactors needed (nothing was ever over threshold).
 - Added the specified .hero-glow::before CSS verbatim to globals.css; hooked to the hero text-block div (user picked it after asking, since .hero doesn't exist). Div already had position:relative, untouched otherwise. Droplet code untouched; canvas z-index 2 paints above the glow so nothing is covered.
 - Gates: oxlint 0 errors, tsc clean, build green 4/4. Deployed to production.
 
+## Addendum 19 — glow v2 (5-stop ellipse, overflow visible)
+- Replaced glow CSS verbatim (1100x500 ellipse fading to true 0, blur 90, center 0.17). Header overflow-hidden to overflow-visible, no other property touched. Droplets untouched.
+- Gates: oxlint 0 errors, tsc clean, build green 4/4. Deployed to production.
+
 ## Addendum 17 — contact section removed
 - Deleted the Contact section (redundant with footer links) and its nav link. Hero/footer links unchanged.
 - Gates: oxlint 0 errors, tsc clean, build green 4/4. Deployed to production.
