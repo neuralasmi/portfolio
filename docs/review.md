@@ -131,6 +131,10 @@ All ≤7. No refactors needed (nothing was ever over threshold).
 - Old ::before rules deleted; .lavender-glow div as first child of text block, CSS verbatim. Clipping audit: header overflow-visible, #droplet-hero/text block no overflow, body has overflow-x:hidden only (horizontal, at viewport edge — reported, unchanged). Header +pb-4 for fade room; About untouched. Droplets untouched.
 - Gates: oxlint 0 errors, tsc clean, build green 4/4. Deployed to production.
 
+## Addendum 21 — resume + pill buttons
+- Nav name replaced with white Resume pill (lavender hover), hero GitHub/LinkedIn matching pills. Theme tokens used (near-white fg, accent-fg hover). Droplets untouched. Buttons point at /resume.pdf — PDF file still needed from user.
+- Gates: oxlint 0 errors, tsc clean, build green 4/4. Deployed to production.
+
 ## Addendum 17 — contact section removed
 - Deleted the Contact section (redundant with footer links) and its nav link. Hero/footer links unchanged.
 - Gates: oxlint 0 errors, tsc clean, build green 4/4. Deployed to production.
@@ -156,6 +160,6 @@ All ≤7. No refactors needed (nothing was ever over threshold).
 - Root cause of dead hero: vendor Droplets hard-freezes on OS reduced-motion with no override prop, so the footer toggle could never unfreeze it. Replaced with HeroRain (plain 2D canvas, sharp elongated drops + trails, even coverage, obeys toggle, needs no WebGL). Text is plain DOM, never distorted. Vendor files deleted.
 - Gates: oxlint 0 errors, tsc clean, build green 4/4. Deployed to production.
 
-## Addendum 21 — resume + pill buttons
-- Nav name replaced with white Resume pill (lavender hover), hero GitHub/LinkedIn matching pills. Theme tokens used (near-white fg, accent-fg hover). Droplets untouched. Buttons point at /resume.pdf — PDF file still needed from user.
+## Addendum 22 — glow relocation (disappearing-glow fix)
+- Diagnosis: #droplet-hero.is-active > * opacity:0 hid the whole text subtree including the glow div (visible only pre-capture). No JS animation/removal involved; child opacity !important could not override ancestor opacity, so relocated per spec: glow div now first child of header#main. CSS !important patch also applied as specified. Droplet logic/markup/CSS untouched.
 - Gates: oxlint 0 errors, tsc clean, build green 4/4. Deployed to production.
