@@ -1,27 +1,50 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
+import html2canvas from "html2canvas";
 
-// "Asmi" rain-on-glass intro widget. Verbatim logic from the provided
-// reference (droplet/refraction math adapted from the public Droplets
-// rain-on-glass algorithm). React adaptation only: refs instead of
-// getElementById, RAF + observer cleanup on unmount. Behavior untouched:
-// heavy distortion on load -> eases clear over ~2.5s -> faint drizzle.
-// Reduced-motion or missing WebGL2: plain text stays (is-active never set).
-export default function DropletName() {
-  const wrapRef = useRef<HTMLSpanElement>(null);
+// Whole-hero rain-on-glass widget. Reference logic integrated verbatim
+// (droplet/refraction math from the public Droplets rain-on-glass algorithm).
+// React adaptations only: refs instead of getElementById/appendChild,
+// unmount cleanup. Heavy storm on load -> eases clear over ~2.4s ->
+// permanent clearly-visible ambient rain via rAF, forever.
+// Anything fails (no container, reduced-motion, no html2canvas, no WebGL2,
+// shader/capture errors): plain content stays, with a console message.
+export default function DropletHero({
+  children,
+  enabled = true,
+}: {
+  children: ReactNode;
+  enabled?: boolean;
+}) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    const wrap = wrapRef.current;
-    if (!wrap) return;
-    const label = wrap.querySelector(".droplet-name-label") as HTMLElement | null;
-    const canvas = wrap.querySelector(".droplet-name-canvas") as HTMLCanvasElement | null;
-    if (!label || !canvas) return;
+    if (!enabled) return;
+    const container = containerRef.current;
+    const canvas = canvasRef.current;
+    if (!container) {
+      console.warn("Droplets: #droplet-hero not found, nothing to do.");
+      return;
+    }
+    if (!canvas) {
+      console.warn("Droplets: canvas ref missing, nothing to do.");
+      return;
+    }
 
     const reduceMotion =
       window.matchMedia &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduceMotion) return;
+    if (reduceMotion) {
+      console.warn("Droplets: reduced-motion preferred, skipping.");
+      return;
+    }
+
+    if (typeof html2canvas !== "function") {
+      console.warn("Droplets: html2canvas did not load, skipping rain effect.");
+      return;
+    }
 
     const gl = canvas.getContext("webgl2", {
       alpha: true,
@@ -30,33 +53,9 @@ export default function DropletName() {
       depth: false,
       stencil: false,
     });
-    if (!gl) return;
-
-    const cs = window.getComputedStyle(label);
-    const TEXT_COLOR = cs.color;
-    const TEXT_FONT =
-      cs.fontStyle + " " + cs.fontWeight + " " + cs.fontSize + "/" + cs.lineHeight + " " + cs.fontFamily;
-    const TEXT_STRING = label.textContent ?? "";
-
-    const textCanvas = document.createElement("canvas");
-    const textCtx = textCanvas.getContext("2d");
-    if (!textCtx) return;
-
-    function redrawTextTexture() {
-      const rect = wrap!.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const w = Math.max(1, Math.round(rect.width * dpr));
-      const h = Math.max(1, Math.round(rect.height * dpr));
-      textCanvas.width = w;
-      textCanvas.height = h;
-      textCtx!.setTransform(1, 0, 0, 1, 0, 0);
-      textCtx!.clearRect(0, 0, w, h);
-      textCtx!.scale(dpr, dpr);
-      textCtx!.font = TEXT_FONT;
-      textCtx!.fillStyle = TEXT_COLOR;
-      textCtx!.textBaseline = "middle";
-      textCtx!.textAlign = "left";
-      textCtx!.fillText(TEXT_STRING, 0, rect.height / 2);
+    if (!gl) {
+      console.warn("Droplets: WebGL2 not supported, skipping rain effect.");
+      return;
     }
 
     const VERT_SRC = `#version 300 es
@@ -126,9 +125,7 @@ export default function DropletName() {
       float ti = fract(t * (gridFall + 0.1) + n.z);
       float y = (Saw(slowStart, ti) - 0.5) * 0.9 + 0.5;
       vec2 p = vec2(x, y);
-      float dropShape = (ti > slowStart)
-        ? -sin(6.2831853 * ti / (1.0 - slowStart)) * 0.5 - 0.5
-        : 0.0;
+      float dropShape = (ti > slowStart) ? -sin(6.2831853 * ti / (1.0 - slowStart)) * 0.5 - 0.5 : 0.0;
       float d = sdEgg((st - p) * a.yx / vec2(uDropWidth, uDropLength), 0.0, dropShape);
       float diameter = N(id.x + id.y) / 7.0 + 0.2;
       float mainDrop = S(diameter / 1.5, 0.0, d);
@@ -166,8 +163,8 @@ export default function DropletName() {
 
     vec2 Drops(vec2 uv, float t, float tFall, float l0, float l1, float l2) {
       float s = StaticDrops(uv, t) * l0;
-      vec2 m1 = DropLayer(uv, tFall) * (l1 * 1.0);
-      vec2 m2 = DropLayer(uv * 1.85, tFall) * (l2 * 1.0);
+      vec2 m1 = DropLayer(uv, tFall) * l1;
+      vec2 m2 = DropLayer(uv * 1.85, tFall) * l2;
       float c = s + m1.x + m2.x;
       c = S(0.3, 1.0, c);
       return vec2(c, m1.y + m2.y);
@@ -177,7 +174,7 @@ export default function DropletName() {
       vec2 uv = vUv;
       vec2 aspectUv = (uv - 0.5) * vec2(uResolution.x / uResolution.y, 1.0);
       float t = uTime * 0.2;
-      float dropScale = clamp(uScale, 0.05, 6.0);
+      float dropScale = clamp(min(uResolution.x, uResolution.y) / 900.0, 0.75, 1.35) * uScale;
       vec2 scaledUv = aspectUv * dropScale;
 
       float rainAmount = clamp(uIntensity, 0.0, 1.25);
@@ -210,11 +207,11 @@ export default function DropletName() {
 
     function compile(type: number, src: string) {
       const shader = gl!.createShader(type);
-      if (!shader) throw new Error("Unable to create droplet shader");
+      if (!shader) throw new Error("Droplets: unable to create shader");
       gl!.shaderSource(shader, src);
       gl!.compileShader(shader);
       if (!gl!.getShaderParameter(shader, gl!.COMPILE_STATUS)) {
-        console.error("Droplets shader error:", gl!.getShaderInfoLog(shader));
+        console.error("Droplets: shader compile error:", gl!.getShaderInfoLog(shader));
       }
       return shader;
     }
@@ -222,12 +219,15 @@ export default function DropletName() {
     const vertShader = compile(gl.VERTEX_SHADER, VERT_SRC);
     const fragShader = compile(gl.FRAGMENT_SHADER, FRAG_SRC);
     const program = gl.createProgram();
-    if (!program) return;
+    if (!program) {
+      console.error("Droplets: program creation failed");
+      return;
+    }
     gl.attachShader(program, vertShader);
     gl.attachShader(program, fragShader);
     gl.linkProgram(program);
     if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-      console.error("Droplets link error:", gl.getProgramInfoLog(program));
+      console.error("Droplets: program link error:", gl.getProgramInfoLog(program));
       return;
     }
 
@@ -255,30 +255,55 @@ export default function DropletName() {
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
 
-    function uploadContentTexture() {
+    function uploadTexture(sourceCanvas: HTMLCanvasElement) {
       gl!.bindTexture(gl!.TEXTURE_2D, contentTexture);
-      gl!.texImage2D(gl!.TEXTURE_2D, 0, gl!.RGBA, gl!.RGBA, gl!.UNSIGNED_BYTE, textCanvas);
+      gl!.texImage2D(gl!.TEXTURE_2D, 0, gl!.RGBA, gl!.RGBA, gl!.UNSIGNED_BYTE, sourceCanvas);
       gl!.generateMipmap(gl!.TEXTURE_2D);
     }
 
     function syncCanvasSize() {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const rect = wrap!.getBoundingClientRect();
-      const w = Math.max(1, Math.round(rect.width * dpr));
-      const h = Math.max(1, Math.round(rect.height * dpr));
-      if (canvas!.width !== w || canvas!.height !== h) {
-        canvas!.width = w;
-        canvas!.height = h;
-      }
-      redrawTextTexture();
-      uploadContentTexture();
+      const rect = container!.getBoundingClientRect();
+      canvas!.width = Math.max(1, Math.round(rect.width * dpr));
+      canvas!.height = Math.max(1, Math.round(rect.height * dpr));
     }
 
-    const BROKEN = { intensity: 1.15, refraction: 0.9, blur: 3.0, scale: 1.1, dropWidth: 0.9, dropLength: 1.15, wiggle: 0.6, staticDrops: 1.6, fallSpeed: 1.4, vignette: 0.12 };
-    const SETTLED = { intensity: 0.18, refraction: 0.05, blur: 0.0, scale: 1.1, dropWidth: 0.9, dropLength: 1.15, wiggle: 0.4, staticDrops: 0.12, fallSpeed: 0.55, vignette: 0.04 };
+    let capturing = false;
+    let ready = false;
+    let raf = 0;
+    let resizeTimer: ReturnType<typeof setTimeout> | null = null;
+
+    function capture() {
+      if (capturing) return;
+      capturing = true;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      html2canvas(container!, {
+        backgroundColor: null,
+        scale: dpr,
+        ignoreElements: (el: Element) => el === canvas,
+      })
+        .then((snapshot) => {
+          uploadTexture(snapshot);
+          capturing = false;
+          if (!ready) {
+            ready = true;
+            container!.classList.add("is-active");
+            console.log("Droplets: rain effect running on #droplet-hero");
+            raf = requestAnimationFrame(render);
+          }
+        })
+        .catch((err: unknown) => {
+          console.warn("Droplets: capture failed", err);
+          capturing = false;
+        });
+    }
+
+    const BROKEN = { intensity: 1.2, refraction: 0.55, blur: 2.5, scale: 1, dropWidth: 1, dropLength: 1.2, wiggle: 1, staticDrops: 1.2, fallSpeed: 1.6, vignette: 0.15 };
+    const SETTLED = { intensity: 0.5, refraction: 0.2, blur: 0, scale: 1, dropWidth: 1, dropLength: 1, wiggle: 1, staticDrops: 0.2, fallSpeed: 1, vignette: 0.05 };
     const HOLD_MS = 300;
-    const TWEEN_MS = 2200;
+    const TWEEN_MS = 2400;
     const current: Record<keyof typeof BROKEN, number> = { ...BROKEN };
+    let startTime: number | null = null;
 
     function easeOutCubic(t: number) {
       return 1 - Math.pow(1 - t, 3);
@@ -291,9 +316,6 @@ export default function DropletName() {
         current[key] = BROKEN[key] + (SETTLED[key] - BROKEN[key]) * e;
       });
     }
-
-    let startTime: number | null = null;
-    let raf = 0;
 
     function render(now: number) {
       if (startTime === null) startTime = now;
@@ -327,26 +349,30 @@ export default function DropletName() {
       raf = requestAnimationFrame(render);
     }
 
-    syncCanvasSize();
-    wrap.classList.add("is-active");
-    raf = requestAnimationFrame(render);
+    const onResize = () => {
+      if (resizeTimer) clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        syncCanvasSize();
+        capture();
+      }, 150);
+    };
 
-    const resizeObserver = new ResizeObserver(() => {
-      syncCanvasSize();
-    });
-    resizeObserver.observe(wrap);
+    syncCanvasSize();
+    capture();
+    window.addEventListener("resize", onResize);
 
     return () => {
       cancelAnimationFrame(raf);
-      resizeObserver.disconnect();
-      wrap.classList.remove("is-active");
+      if (resizeTimer) clearTimeout(resizeTimer);
+      window.removeEventListener("resize", onResize);
+      container.classList.remove("is-active");
     };
-  }, []);
+  }, [enabled]);
 
   return (
-    <span id="asmi-droplet-name" className="droplet-name">
-      <span className="droplet-name-label">Asmi</span>
-      <canvas className="droplet-name-canvas" />
-    </span>
+    <div id="droplet-hero" ref={containerRef}>
+      {children}
+      {enabled && <canvas ref={canvasRef} className="droplet-hero-canvas" />}
+    </div>
   );
 }

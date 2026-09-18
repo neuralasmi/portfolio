@@ -1,7 +1,7 @@
 "use client";
 
 import { ThinkingOrb } from "thinking-orbs";
-import DropletName from "@/components/DropletName";
+import DropletHero from "@/components/DropletHero";
 import { useMotionOn } from "@/lib/motion";
 import Navbar from "@/components/Navbar";
 import About from "@/components/About";
@@ -18,8 +18,9 @@ const LINKS = site.links;
 function HeroContent() {
   const motionOn = useMotionOn();
   return (
-    <div className="relative mx-auto max-w-2xl px-5 md:px-8 pt-28 pb-14">
-      <h1 className="text-3xl font-semibold tracking-tight">{motionOn ? <DropletName /> : "Asmi"}{" Yadav"}</h1>
+    <DropletHero enabled={motionOn}>
+      <div className="relative mx-auto max-w-2xl px-5 md:px-8 pt-28 pb-14">
+      <h1 className="text-3xl font-semibold tracking-tight">Asmi Yadav</h1>
       <p id="hero-tagline" className="mt-2 text-base text-muted">{site.role}</p>
       <p className="mt-4 flex items-center gap-2 text-sm text-muted">
         <ThinkingOrb state="breathing" size={20} paused={!motionOn} />
@@ -32,11 +33,12 @@ function HeroContent() {
         <a href={LINKS.github} target="_blank" className="text-fg underline decoration-line underline-offset-4 hover:text-accent-fg">
           GitHub
         </a>
-        <a href={LINKS.linkedin} target="_blank" className="text-fg underline decoration-line underline-offset-4 hover:text-accent-fg">
-          LinkedIn
-        </a>
+          <a href={LINKS.linkedin} target="_blank" className="text-fg underline decoration-line underline-offset-4 hover:text-accent-fg">
+            LinkedIn
+          </a>
+        </div>
       </div>
-    </div>
+    </DropletHero>
   );
 }
 

@@ -119,6 +119,10 @@ All ≤7. No refactors needed (nothing was ever over threshold).
 - My vendored copy had vec3 where upstream has vec4 (snoise temporaries) — GLSL only fails at runtime, so build was green while the browser threw. Fixed, audited the rest of the file against upstream: identical except the two intended bg changes.
 - Gates: tsc clean, build green 4/4.
 
+## Addendum 14 — Asmi-only droplet widget
+- Integrated the provided reference verbatim as DropletName.tsx (refs + unmount cleanup only additions). Full-page vendor wrap removed. Yadav, tagline, About and all sections untouched. Fallback safeguard kept (is-active gating, reduced-motion + no-WebGL2 = plain text).
+- Gates: oxlint 0 errors, tsc clean, build green 4/4. Deployed to production.
+
 ## Addendum 12 — WebGL gating + fallbacks
 - Diagnosis for dead canvases on user machine: both effects fail silently when WebGL2 context creation fails (no errors thrown by design). Added useWebGL2 probe in lib/motion.ts; hero renders poster-backed content and footer renders its placeholder when motion is off OR WebGL2 is missing. No more voids on any browser.
 - Gates: oxlint 0 errors, tsc clean, build green 4/4.

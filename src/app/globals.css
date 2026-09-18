@@ -27,21 +27,21 @@ body {
   color: white;
 }
 
-/* DropletName widget: text hides only once the effect is running. */
-.droplet-name {
+/* DropletHero widget: content hides only once captured and rendering. */
+#droplet-hero {
   position: relative;
-  display: inline-block;
 }
-.droplet-name.is-active .droplet-name-label {
-  color: transparent;
+#droplet-hero.is-active > *:not(.droplet-hero-canvas) {
+  opacity: 0;
 }
-.droplet-name-canvas {
+.droplet-hero-canvas {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   pointer-events: none;
   display: block;
+  z-index: 2;
 }
 
 @media (prefers-reduced-motion: reduce) {
