@@ -18,7 +18,7 @@ export default function Navbar() {
         Skip to content
       </a>
       <div className="mx-auto flex max-w-2xl items-center justify-between px-5 py-3.5 md:px-8">
-        <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="rounded-full bg-fg px-4 py-1.5 text-sm font-semibold text-bg transition hover:bg-accent-fg">
+        <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-fg transition hover:text-accent-fg">
           Resume
         </a>
         <div className="hidden items-center gap-6 text-sm text-muted md:flex">

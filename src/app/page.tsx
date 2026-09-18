@@ -31,10 +31,10 @@ function HeroContent() {
         <a href={`mailto:${LINKS.email}`} className="text-fg underline decoration-line underline-offset-4 hover:text-accent-fg">
           Email
         </a>
-            <a href={LINKS.github} target="_blank" rel="noopener noreferrer" className="rounded-full bg-fg px-4 py-1.5 font-semibold text-bg transition hover:bg-accent-fg">
+            <a href={LINKS.github} target="_blank" rel="noopener noreferrer" className="text-fg underline decoration-line underline-offset-4 hover:text-accent-fg">
               GitHub
             </a>
-            <a href={LINKS.linkedin} target="_blank" rel="noopener noreferrer" className="rounded-full bg-fg px-4 py-1.5 font-semibold text-bg transition hover:bg-accent-fg">
+            <a href={LINKS.linkedin} target="_blank" rel="noopener noreferrer" className="text-fg underline decoration-line underline-offset-4 hover:text-accent-fg">
               LinkedIn
             </a>
         </div>
