@@ -127,6 +127,10 @@ All ≤7. No refactors needed (nothing was ever over threshold).
 - Replaced glow CSS verbatim (1100x500 ellipse fading to true 0, blur 90, center 0.17). Header overflow-hidden to overflow-visible, no other property touched. Droplets untouched.
 - Gates: oxlint 0 errors, tsc clean, build green 4/4. Deployed to production.
 
+## Addendum 20 — glow v3 (real div)
+- Old ::before rules deleted; .lavender-glow div as first child of text block, CSS verbatim. Clipping audit: header overflow-visible, #droplet-hero/text block no overflow, body has overflow-x:hidden only (horizontal, at viewport edge — reported, unchanged). Header +pb-4 for fade room; About untouched. Droplets untouched.
+- Gates: oxlint 0 errors, tsc clean, build green 4/4. Deployed to production.
+
 ## Addendum 17 — contact section removed
 - Deleted the Contact section (redundant with footer links) and its nav link. Hero/footer links unchanged.
 - Gates: oxlint 0 errors, tsc clean, build green 4/4. Deployed to production.
