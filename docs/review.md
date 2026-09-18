@@ -135,6 +135,10 @@ All ≤7. No refactors needed (nothing was ever over threshold).
 - Nav name replaced with white Resume pill (lavender hover), hero GitHub/LinkedIn matching pills. Theme tokens used (near-white fg, accent-fg hover). Droplets untouched. Buttons point at /resume.pdf — PDF file still needed from user.
 - Gates: oxlint 0 errors, tsc clean, build green 4/4. Deployed to production.
 
+## Addendum 22 — resume PDF generated
+- No PDF existed anywhere, so generated public/resume.pdf from the pasted resume text (fpdf2 + Arial, layout matched to the original: contact line, blue rule, section rules, right-aligned dates/links, skills table). Content verified by extraction. Resume button now opens it.
+- Gates: content verified, build unaffected (static asset). Deployed to production.
+
 ## Addendum 17 — contact section removed
 - Deleted the Contact section (redundant with footer links) and its nav link. Hero/footer links unchanged.
 - Gates: oxlint 0 errors, tsc clean, build green 4/4. Deployed to production.
