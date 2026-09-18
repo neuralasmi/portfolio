@@ -11,7 +11,7 @@ export default function Experience() {
         {site.experience.map((e) => (
           <li key={e.org}>
             <Reveal>
-              <div className="text-sm font-medium text-fg">
+              <div className="text-sm font-medium text-accent-fg">
                 {e.role} — {e.org}
               </div>
               <div className="font-mono text-xs text-muted">{e.period}</div>
