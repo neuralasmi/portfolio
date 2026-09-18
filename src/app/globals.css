@@ -69,6 +69,10 @@ body {
   filter: blur(90px);
   pointer-events: none;
   z-index: 0;
+  opacity: 1 !important;
+  animation: none !important;
+  transition: none !important;
+  will-change: auto;
 }
 
 .hero-text-block > *:not(.lavender-glow) {

@@ -20,7 +20,6 @@ function HeroContent() {
   return (
     <DropletHero enabled={motionOn}>
       <div className="hero-text-block relative mx-auto max-w-2xl px-5 md:px-8 pt-28 pb-14">
-        <div className="lavender-glow" aria-hidden="true" />
       <h1 className="text-3xl font-semibold tracking-tight">Asmi Yadav</h1>
       <p id="hero-tagline" className="mt-2 text-base text-accent-fg">{site.role}</p>
       <p className="mt-4 flex items-center gap-2 text-sm text-muted">
@@ -49,6 +48,7 @@ function PageBody() {
       <Navbar />
       {/* HERO */}
       <header id="main" className="relative overflow-visible pb-4">
+        <div className="lavender-glow" aria-hidden="true" />
         <HeroContent />
       </header>
 
