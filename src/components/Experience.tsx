@@ -12,7 +12,7 @@ export default function Experience() {
           <li key={e.org}>
             <Reveal>
               <div className="text-sm font-medium text-accent-fg">
-                {e.role} — {e.org}
+                {e.role} at {e.org}
               </div>
               <div className="font-mono text-xs text-muted">{e.period}</div>
               <p className="mt-1 text-sm leading-relaxed text-muted">{e.desc}</p>

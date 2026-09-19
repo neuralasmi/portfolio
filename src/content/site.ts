@@ -41,13 +41,13 @@ export const site = {
     {
       role: "AI Content Analyst, Intern",
       org: "FRND",
-      period: "Jan 2026 – Feb 2026",
+      period: "Jan 2026 to Feb 2026",
       desc: "Cleaned chatbot training data until it stopped repeating itself.",
     },
     {
       role: "Built and ran it solo, Freelance",
       org: "Tiffinly",
-      period: "Apr 2025 – Sept 2025",
+      period: "Apr 2025 to Sept 2025",
       desc: "Marketplace MVP connecting students with home cooks. 50 students, 10 cooks, one pilot.",
     },
   ],
