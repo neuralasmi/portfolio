@@ -44,6 +44,22 @@ body {
   z-index: 2;
 }
 
+/* Floating nav pill shell (dynamic colors set from FloatingNavShell). */
+.floating-nav-shell {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  width: min(920px, calc(100% - 32px));
+  border-radius: 999px;
+  padding: 10px 20px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background-color: rgba(7, 7, 11, 0.6);
+}
+
 /* Lavender ambient glow behind the hero text block (real div, not pseudo-element). */
 .hero-text-block {
   position: relative;

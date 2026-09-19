@@ -2,6 +2,7 @@
 
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
+import FloatingNavShell from "./FloatingNavShell";
 
 const ITEMS: [string, string][] = [
   ["About", "#about"],
@@ -13,11 +14,11 @@ const ITEMS: [string, string][] = [
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   return (
-    <nav className="fixed top-0 inset-x-0 z-50 border-b border-line bg-bg/80 backdrop-blur-xl">
+    <FloatingNavShell>
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:m-2 focus:rounded focus:bg-accent focus:px-3 focus:py-1 focus:text-white">
         Skip to content
       </a>
-      <div className="mx-auto flex max-w-2xl items-center justify-between px-5 py-3.5 md:px-8">
+      <div className="flex w-full items-center justify-between">
         <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-fg transition hover:text-accent-fg">
           Resume
         </a>
@@ -33,7 +34,7 @@ export default function Navbar() {
         </button>
       </div>
       {open && (
-        <div className="flex flex-col gap-1 border-t border-line bg-bg px-5 py-3 md:hidden">
+        <div className="absolute left-4 right-4 top-full mt-2 flex flex-col gap-1 rounded-2xl border border-line bg-bg px-3 py-2 md:hidden">
           {ITEMS.map(([label, href]) => (
             <a key={href} href={href} onClick={() => setOpen(false)} className="rounded-md px-2 py-2 text-sm text-fg hover:bg-white/5">
               {label}
@@ -41,6 +42,6 @@ export default function Navbar() {
           ))}
         </div>
       )}
-    </nav>
+    </FloatingNavShell>
   );
 }
