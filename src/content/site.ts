@@ -58,8 +58,8 @@ export const site = {
     { group: "Languages", items: ["Python", "Java", "C", "C++", "SQL", "HTML/CSS"] },
   ],
   education: [
-    { school: "Manipal University Jaipur", detail: "B.Tech CS (IoT & Intelligent Systems), 2022–2026" },
-    { school: "St. Joseph's Coed Sr. Sec. School, Bhopal", detail: "CBSE 12th — 91.3%" },
+    { school: "Manipal University Jaipur", detail: "B.Tech CS (IoT & Intelligent Systems), 2022 to 2026" },
+    { school: "St. Joseph's Coed Sr. Sec. School, Bhopal", detail: "CBSE 12th, 91.3%" },
   ],
 };
 

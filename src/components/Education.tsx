@@ -2,8 +2,7 @@ import Reveal from "./Reveal";
 import { site } from "@/content/site";
 
 const CERTS = [
-  "Mastering Data Structures & Algorithms (C/C++) — Abdul Bari",
-  "AI Tools and ChatGPT Workshop",
+  "Mastering Data Structures & Algorithms (C/C++), Abdul Bari",
 ];
 
 export default function Education() {
@@ -17,7 +16,7 @@ export default function Education() {
           <li key={e.school} className="text-sm leading-relaxed">
             <Reveal>
               <span className="font-medium text-fg">{e.school} </span>
-              <span className="text-muted">— {e.detail}</span>
+              <span className="text-muted">{e.detail}</span>
             </Reveal>
           </li>
         ))}
