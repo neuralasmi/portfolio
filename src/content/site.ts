@@ -45,7 +45,7 @@ export const site = {
       desc: "Cleaned chatbot training data until it stopped repeating itself.",
     },
     {
-      role: "Built and ran it solo, Freelance",
+      role: "Software Developer, Freelance",
       org: "Tiffinly",
       period: "Apr 2025 to Sept 2025",
       desc: "Marketplace MVP connecting students with home cooks. 50 students, 10 cooks, one pilot.",
