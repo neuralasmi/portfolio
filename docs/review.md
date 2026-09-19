@@ -180,3 +180,7 @@ All ≤7. No refactors needed (nothing was ever over threshold).
 ## Addendum 25 — glow +25%, deploy blocked on auth
 - globals.css .lavender-glow gradient stops 0.24→0.30, 0.15→0.19, 0.07→0.09, 0.02→0.025 (proportional +25%, falloff curve preserved). Size/position/blur untouched. (First applied against wrong baseline, caught and corrected pre-deploy.)
 - Gates: build green. Deploy FAILED: Vercel "Not authorized" (session expired) — needs user `npx vercel login`, then retry --prod.
+
+## Addendum 26 — staticDrops cut (dust fix)
+- DropletHero BROKEN/SETTLED staticDrops 0.5→0.15 and 0.1→0.02 only; everything else identical. Fine-grid layer was flickering at its visibility threshold.
+- Gates: tsc clean, build green 4/4. Deployed to production.

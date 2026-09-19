@@ -13,7 +13,7 @@ export const site = {
     github: "https://github.com/neuralasmi",
   },
   about:
-    "I'm Asmi. CS grad (IoT & Intelligent Systems, Manipal Jaipur '26) working across AI/ML and backend: fine-tuning transformers, building RAG pipelines, shipping them behind FastAPI and Docker. I build fast with Claude. Previously: chatbot quality at FRND, and a meal marketplace MVP I built and ran solo for 50 students and 10 cooks. Now in Bangalore.",
+    "I'm wired to spot what's broken, repetitive, or ready to be automated, and my brain is already planning the fix, usually with a fine-tuned transformer or a RAG pipeline behind FastAPI and Docker. I ran a marketplace solo for 50 students and 10 cooks, and it taught me to ship faster and better.",
   projects: [
     {
       title: "CineSearch",
