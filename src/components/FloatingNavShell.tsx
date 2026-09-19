@@ -2,11 +2,11 @@
 
 import { useEffect, useRef, type ReactNode } from "react";
 
-// Floating pill shell for the nav: shifts from site black to the accent
+// Floating pill shell for the nav: shifts from site black to the footer-wordmark
 // lavender in real time with scroll (rAF-throttled). Colors track tokens:
-// START = bg-bg #07070b, END = accent #8b5cf6.
+// START = bg-bg #07070b, END = accent-fg #c4b5fd.
 const START = [7, 7, 11];
-const END = [139, 92, 246];
+const END = [196, 181, 253];
 
 function lerp(a: number, b: number, t: number) {
   return a + (b - a) * t;
