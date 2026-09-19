@@ -176,3 +176,7 @@ All ≤7. No refactors needed (nothing was ever over threshold).
 ## Addendum 24 — droplet DPR cap 2 to 3
 - Diagnosis: antialias:true is set but moot (fullscreen-quad procedural shading has no geometry edges for MSAA to smooth; no offscreen FBO exists). Sharpness lever is buffer resolution. Raised DPR cap in both sizing paths. Tuning values untouched.
 - Gates: oxlint 0 errors, tsc clean, build green 4/4. Deployed to production.
+
+## Addendum 25 — glow +25%, deploy blocked on auth
+- globals.css .lavender-glow gradient stops 0.24→0.30, 0.15→0.19, 0.07→0.09, 0.02→0.025 (proportional +25%, falloff curve preserved). Size/position/blur untouched. (First applied against wrong baseline, caught and corrected pre-deploy.)
+- Gates: build green. Deploy FAILED: Vercel "Not authorized" (session expired) — needs user `npx vercel login`, then retry --prod.

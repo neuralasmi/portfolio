@@ -306,8 +306,8 @@ export default function DropletHero({
         });
     }
 
-    const BROKEN = { intensity: 1.2, refraction: 0.55, blur: 2.5, scale: 0.55, dropWidth: 1.3, dropLength: 1.3, wiggle: 1, staticDrops: 0.5, fallSpeed: 1.6, vignette: 0.15 };
-    const SETTLED = { intensity: 0.75, refraction: 0.22, blur: 0, scale: 0.55, dropWidth: 1.3, dropLength: 1.1, wiggle: 0.9, staticDrops: 0.1, fallSpeed: 1, vignette: 0.05 };
+    const BROKEN = { intensity: 1.2, refraction: 0.55, blur: 2.5, scale: 0.55, dropWidth: 1.3, dropLength: 1.3, wiggle: 1, staticDrops: 0.15, fallSpeed: 1.6, vignette: 0.15 };
+    const SETTLED = { intensity: 0.75, refraction: 0.22, blur: 0, scale: 0.55, dropWidth: 1.3, dropLength: 1.1, wiggle: 0.9, staticDrops: 0.02, fallSpeed: 1, vignette: 0.05 };
     const HOLD_MS = 300;
     const TWEEN_MS = 2400;
     const current: Record<keyof typeof BROKEN, number> = { ...BROKEN };
