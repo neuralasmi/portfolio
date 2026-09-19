@@ -22,7 +22,7 @@ export default function Navbar() {
         <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-fg transition hover:text-accent-fg">
           Resume
         </a>
-        <div className="hidden items-center gap-6 text-sm text-muted md:flex">
+        <div className="hidden items-center gap-6 text-sm font-bold text-fg md:flex">
           {ITEMS.map(([label, href]) => (
             <a key={href} href={href} className="transition hover:text-accent-fg">
               {label}
@@ -36,7 +36,7 @@ export default function Navbar() {
       {open && (
         <div className="absolute left-4 right-4 top-full mt-2 flex flex-col gap-1 rounded-2xl border border-line bg-bg px-3 py-2 md:hidden">
           {ITEMS.map(([label, href]) => (
-            <a key={href} href={href} onClick={() => setOpen(false)} className="rounded-md px-2 py-2 text-sm text-fg hover:bg-white/5">
+            <a key={href} href={href} onClick={() => setOpen(false)} className="rounded-md px-2 py-2 text-sm font-bold text-fg hover:bg-white/5">
               {label}
             </a>
           ))}
