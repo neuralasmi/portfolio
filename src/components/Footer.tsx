@@ -1,9 +1,8 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
 import { site } from "@/content/site";
-import { getMotionPref, setMotionPref, useMotionOn, useWebGL2, type MotionPref } from "@/lib/motion";
+import { useMotionOn, useWebGL2 } from "@/lib/motion";
 
 const LiquidFormBackground = dynamic(
   () => import("@/components/liquid-form/LiquidFormBackground").then((m) => m.LiquidFormBackground),
@@ -12,17 +11,8 @@ const LiquidFormBackground = dynamic(
 
 // Footer: name + links left, blob right, tiny strip below.
 export default function Footer({ photoSrc }: { photoSrc?: string }) {
-  const [pref, setPref] = useState<MotionPref>("auto");
   const motionOn = useMotionOn();
   const webgl2 = useWebGL2();
-  useEffect(() => {
-    setPref(getMotionPref());
-    const update = () => setPref(getMotionPref());
-    window.addEventListener("portfolio-motion", update);
-    return () => window.removeEventListener("portfolio-motion", update);
-  }, []);
-  const cycle = () =>
-    setMotionPref(pref === "auto" ? "on" : pref === "on" ? "off" : "auto");
 
   return (
     <footer className="border-t border-line">
@@ -83,9 +73,6 @@ export default function Footer({ photoSrc }: { photoSrc?: string }) {
         {/* Footer - Tiny and simple */}
         <div className="w-full flex justify-between items-center text-xs text-muted mt-12 pt-6 border-t border-line">
           <span>© 2026 Asmi Yadav</span>
-          <button onClick={cycle} className="underline decoration-line underline-offset-4 hover:text-accent-fg">
-            Motion: {pref}
-          </button>
         </div>
       </div>
     </footer>
