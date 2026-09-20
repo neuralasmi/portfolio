@@ -197,6 +197,10 @@ All ≤7. No refactors needed (nothing was ever over threshold).
 - Diagnosis: effect only distorts on pointer movement (relaxes flat at rest, by design), and the z-10 content layer was swallowing all pointer events before they reached the effect layer. Fix, component untouched: content wrapper pointer-events-none, links back to pointer-events-auto (still clickable).
 - Gates: oxlint 0 errors, tsc clean, build green 4/4. Deployed to production.
 
+## Addendum 30 — tighter footer spacing
+- Vertical rhythm only (py, gaps, strip margins down one step each). Fonts, colors, effects, layout untouched.
+- Gates: oxlint 0 errors, build green 4/4. Deployed to production.
+
 ## Addendum 25 — glow +25%, deploy blocked on auth
 - globals.css .lavender-glow gradient stops 0.24→0.30, 0.15→0.19, 0.07→0.09, 0.02→0.025 (proportional +25%, falloff curve preserved). Size/position/blur untouched. (First applied against wrong baseline, caught and corrected pre-deploy.)
 - Gates: build green. Deploy FAILED: Vercel "Not authorized" (session expired) — needs user `npx vercel login`, then retry --prod.

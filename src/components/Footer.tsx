@@ -32,7 +32,7 @@ export default function Footer() {
           >
             asmi<br />yadav
           </a>
-          <div className="flex gap-8 text-lg text-muted">
+          <div className="flex gap-8 text-lg font-semibold text-muted">
             <a href={`mailto:${site.links.email}`} className="pointer-events-auto underline decoration-line underline-offset-4 hover:text-accent-fg">
               Email
             </a>
