@@ -208,3 +208,7 @@ All ≤7. No refactors needed (nothing was ever over threshold).
 ## Addendum 26 — staticDrops cut (dust fix)
 - DropletHero BROKEN/SETTLED staticDrops 0.5→0.15 and 0.1→0.02 only; everything else identical. Fine-grid layer was flickering at its visibility threshold.
 - Gates: tsc clean, build green 4/4. Deployed to production.
+
+## Addendum 27 — CSS status dot replaces orb
+- ThinkingOrb misaligned the status line and froze; replaced with an 8px CSS pulse dot (fixed size, flex-safe, auto-disabled under reduced-motion). Package uninstalled. Droplets untouched.
+- Gates: oxlint 0 errors, tsc clean, build green. Pushed to GitHub (auto-deploys via Vercel).
