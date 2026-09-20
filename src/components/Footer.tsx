@@ -22,24 +22,24 @@ export default function Footer() {
           className="overflow-hidden"
         />
       </div>
-      <div className="relative z-10 max-w-5xl mx-auto px-6 py-6">
+      <div className="pointer-events-none relative z-10 max-w-5xl mx-auto px-6 py-6">
         <main className="flex flex-col gap-8 items-start text-left">
           {/* Name and Links */}
           <a
             href="#top"
-            className="text-6xl font-semibold leading-tight lowercase tracking-tight text-fg transition hover:text-accent-fg sm:text-7xl"
+            className="pointer-events-auto text-6xl font-semibold leading-tight lowercase tracking-tight text-fg transition hover:text-accent-fg sm:text-7xl"
             aria-label="Back to top"
           >
             asmi<br />yadav
           </a>
           <div className="flex gap-8 text-lg text-muted">
-            <a href={`mailto:${site.links.email}`} className="underline decoration-line underline-offset-4 hover:text-accent-fg">
+            <a href={`mailto:${site.links.email}`} className="pointer-events-auto underline decoration-line underline-offset-4 hover:text-accent-fg">
               Email
             </a>
-            <a href={site.links.github} target="_blank" className="underline decoration-line underline-offset-4 hover:text-accent-fg">
+            <a href={site.links.github} target="_blank" className="pointer-events-auto underline decoration-line underline-offset-4 hover:text-accent-fg">
               GitHub
             </a>
-            <a href={site.links.linkedin} target="_blank" className="underline decoration-line underline-offset-4 hover:text-accent-fg">
+            <a href={site.links.linkedin} target="_blank" className="pointer-events-auto underline decoration-line underline-offset-4 hover:text-accent-fg">
               LinkedIn
             </a>
             <span>{site.location}</span>

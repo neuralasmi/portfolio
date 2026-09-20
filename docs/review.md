@@ -189,6 +189,10 @@ All ≤7. No refactors needed (nothing was ever over threshold).
 ## Addendum 27 — galaxy image live
 - User placed public/images/footer-bg.jpg (1229 KB); compressed to 146 KB (max 1600px, q82) and deployed to production. Footer effect now has its distortion source.
 
+## Addendum 28 — footer liquid blob removed
+- Deleted the LiquidForm blob element, its imports/hooks, and the vendored liquid-form directory. Footer is now wordmark + links over the grid-distortion background only. Rain/hero untouched.
+- Gates: oxlint 0 errors, tsc clean, build green 4/4. Deployed to production.
+
 ## Addendum 25 — glow +25%, deploy blocked on auth
 - globals.css .lavender-glow gradient stops 0.24→0.30, 0.15→0.19, 0.07→0.09, 0.02→0.025 (proportional +25%, falloff curve preserved). Size/position/blur untouched. (First applied against wrong baseline, caught and corrected pre-deploy.)
 - Gates: build green. Deploy FAILED: Vercel "Not authorized" (session expired) — needs user `npx vercel login`, then retry --prod.
