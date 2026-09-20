@@ -36,10 +36,10 @@ export default function Footer() {
             <a href={`mailto:${site.links.email}`} className="pointer-events-auto underline decoration-line underline-offset-4 hover:text-accent-fg">
               Email
             </a>
-            <a href={site.links.github} target="_blank" className="pointer-events-auto underline decoration-line underline-offset-4 hover:text-accent-fg">
+            <a href={site.links.github} target="_blank" className="pointer-events-auto font-bold text-bg underline decoration-line underline-offset-4 hover:text-accent-fg">
               GitHub
             </a>
-            <a href={site.links.linkedin} target="_blank" className="pointer-events-auto underline decoration-line underline-offset-4 hover:text-accent-fg">
+            <a href={site.links.linkedin} target="_blank" className="pointer-events-auto font-bold text-bg underline decoration-line underline-offset-4 hover:text-accent-fg">
               LinkedIn
             </a>
             <span>{site.location}</span>
