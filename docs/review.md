@@ -181,6 +181,11 @@ All ≤7. No refactors needed (nothing was ever over threshold).
 - New FloatingNavShell (black bg-bg to accent #8b5cf6, rAF scroll tracking, full lavender by 35% page). Static shell styles in CSS class (lint forbids inline styles); dynamic color via ref only. Nav content/brand/links order unchanged; mobile menu is now a floating card under the pill. Droplets/hero untouched.
 - Gates: oxlint 0 errors, tsc clean, build green 4/4. Deployed to production.
 
+## Addendum 26 — footer GridDistortion background
+- GridDistortion.jsx + CSS created verbatim (one deviation: CSS import line removed — Next.js rejects nested global-CSS imports; its single rule passed via className prop instead). three installed. Footer restructured to background layer + content layer, content untouched. d.ts added for the jsx import (tsconfig excludes jsx).
+- Gates: oxlint 0 errors, tsc clean, build green. Deploy BLOCKED: Vercel "Not authorized" — needs user login, then retry --prod.
+- PENDING: user must save the galaxy image as public/images/footer-bg.jpg (cannot write binary attachments to disk); until then the effect renders dark.
+
 ## Addendum 25 — glow +25%, deploy blocked on auth
 - globals.css .lavender-glow gradient stops 0.24→0.30, 0.15→0.19, 0.07→0.09, 0.02→0.025 (proportional +25%, falloff curve preserved). Size/position/blur untouched. (First applied against wrong baseline, caught and corrected pre-deploy.)
 - Gates: build green. Deploy FAILED: Vercel "Not authorized" (session expired) — needs user `npx vercel login`, then retry --prod.
