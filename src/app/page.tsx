@@ -1,6 +1,5 @@
 "use client";
 
-import { ThinkingOrb } from "thinking-orbs";
 import DropletHero from "@/components/DropletHero";
 import { useMotionOn } from "@/lib/motion";
 import Navbar from "@/components/Navbar";
@@ -23,7 +22,7 @@ function HeroContent() {
       <h1 className="text-3xl font-semibold tracking-tight">Asmi Yadav</h1>
       <p id="hero-tagline" className="mt-2 text-base text-accent-fg">{site.role}</p>
       <p className="mt-4 flex items-center gap-2 text-sm text-muted">
-        <ThinkingOrb state="breathing" size={20} paused={!motionOn} />
+        <span className="status-dot" aria-hidden="true" />
         {site.location}. {site.availability}
       </p>
           <div className="mt-4 flex items-center gap-5 text-sm">

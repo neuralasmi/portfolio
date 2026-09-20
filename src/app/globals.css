@@ -96,6 +96,23 @@ body {
   z-index: 1;
 }
 
+/* Status dot: tiny lavender pulse. Auto-disabled under reduced-motion
+   by the global rule below. */
+.status-dot {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background: var(--color-accent-fg);
+  box-shadow: 0 0 12px rgba(196, 181, 253, 0.8);
+  animation: status-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes status-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
