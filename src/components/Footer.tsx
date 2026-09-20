@@ -22,8 +22,8 @@ export default function Footer() {
           className="overflow-hidden"
         />
       </div>
-      <div className="pointer-events-none relative z-10 max-w-5xl mx-auto px-6 py-6">
-        <main className="flex flex-col gap-8 items-start text-left">
+      <div className="pointer-events-none relative z-10 max-w-5xl mx-auto px-6 py-4">
+        <main className="flex flex-col gap-6 items-start text-left">
           {/* Name and Links */}
           <a
             href="#top"
@@ -47,7 +47,7 @@ export default function Footer() {
         </main>
 
         {/* Footer - Tiny and simple */}
-        <div className="w-full flex justify-between items-center text-xs text-muted mt-12 pt-6 border-t border-line">
+        <div className="w-full flex justify-between items-center text-xs text-muted mt-8 pt-4 border-t border-line">
           <span>© 2026 Asmi Yadav</span>
         </div>
       </div>

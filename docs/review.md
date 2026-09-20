@@ -190,7 +190,11 @@ All ≤7. No refactors needed (nothing was ever over threshold).
 - User placed public/images/footer-bg.jpg (1229 KB); compressed to 146 KB (max 1600px, q82) and deployed to production. Footer effect now has its distortion source.
 
 ## Addendum 28 — footer liquid blob removed
-- Deleted the LiquidForm blob element, its imports/hooks, and the vendored liquid-form directory. Footer is now wordmark + links over the grid-distortion background only. Rain/hero untouched.
+- Deleted the LiquidForm blob element, its imports/hooks, and the vendored liquid-form directory. Footer is now wordmark + links over the grid-distortion galaxy. Rain/hero untouched.
+- Gates: oxlint 0 errors, tsc clean, build green 4/4. Deployed to production.
+
+## Addendum 29 — footer pointer passthrough
+- Diagnosis: effect only distorts on pointer movement (relaxes flat at rest, by design), and the z-10 content layer was swallowing all pointer events before they reached the effect layer. Fix, component untouched: content wrapper pointer-events-none, links back to pointer-events-auto (still clickable).
 - Gates: oxlint 0 errors, tsc clean, build green 4/4. Deployed to production.
 
 ## Addendum 25 — glow +25%, deploy blocked on auth
