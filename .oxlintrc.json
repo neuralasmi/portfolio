@@ -1,5 +1,5 @@
 {
-  "ignorePatterns": ["src/components/canvasui/**", "src/components/liquid-form/**"],
+  "ignorePatterns": ["src/components/canvasui/**", "src/components/liquid-form/**", "src/components/effects/**"],
   "jsPlugins": ["@shadcn/lint"],
   "settings": {
     "shadcn": {

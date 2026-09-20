@@ -4,6 +4,11 @@ import dynamic from "next/dynamic";
 import { site } from "@/content/site";
 import { useMotionOn, useWebGL2 } from "@/lib/motion";
 
+const GridDistortion = dynamic(
+  () => import("@/components/effects/GridDistortion").then((m) => m.default),
+  { ssr: false }
+);
+
 const LiquidFormBackground = dynamic(
   () => import("@/components/liquid-form/LiquidFormBackground").then((m) => m.LiquidFormBackground),
   { ssr: false }
@@ -15,8 +20,18 @@ export default function Footer({ photoSrc }: { photoSrc?: string }) {
   const webgl2 = useWebGL2();
 
   return (
-    <footer className="border-t border-line">
-      <div className="max-w-5xl mx-auto px-6 py-6">
+    <footer className="relative overflow-hidden border-t border-line">
+      <div className="absolute inset-0 z-0" aria-hidden="true">
+        <GridDistortion
+          imageSrc="/images/footer-bg.jpg"
+          grid={10}
+          mouse={0.1}
+          strength={0.15}
+          relaxation={0.9}
+          className="overflow-hidden"
+        />
+      </div>
+      <div className="relative z-10 max-w-5xl mx-auto px-6 py-6">
         <main className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
           {/* Left Column: Name and Links */}
           <div className="flex flex-col gap-8 items-start text-left">
